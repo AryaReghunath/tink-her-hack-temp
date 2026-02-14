@@ -2,27 +2,30 @@
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
-# [Project Name] 🎯
+# Budget Shield 🎯
 
 ## Basic Details
 
 ### Team Name: [Name]
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
+- Member 1: Arya Reghunath - Jyothi Engineering College 
+- Member 2: Ananya P - Jyothi Engineering College
 
 ### Hosted Project Link
-[mention your project hosted link here]
+https://budgetshield.netlify.app/
 
 ### Project Description
-[2-3 lines about what your project does]
+BudgetShield- A student budget planner & expense analyzer 
+Smart budget calculator for college students with monthly comparison graph .Students in College struggle to keep tracks of their monthly expenses and this website helps the students to be more aware of their monthly budget and their monthly expenditure
 
 ### The Problem statement
-[What problem are you solving?]
+Students struggle to track their monthly expenditures and ends up running off budget 
+Small daily expenses go unnoticed
+Month end money shortage is common
 
 ### The Solution
-[How are you solving it?]
+Budgetshield is a student focused budget calculator web app that simplifies money management through easy tracking and visual insights
 
 ---
 
@@ -46,38 +49,41 @@
 ## Features
 
 List the key features of your project:
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-- Feature 4: [Description]
-
----
+- Feature 1: [Real time dash board]
+- Feature 2: [Total budget]
+- Feature 3: [Total expenses]
+- Feature 4: [Remaining balance]
+- Feature 5:[Category-wise expense allocation charts] 
+--Feature 6:[Visual analytics]-
 
 ## Implementation
 
 ### For Software:
 
 #### Installation
+Since this is a pure frontend web application (HTML, CSS, JavaScript), there are no package installations required.
 ```bash
-[Installation commands - e.g., npm install, pip install -r requirements.txt]
+# Clone the repository
+git clone https://github.com/your-username/BudgetShield.git
+
+# Navigate to project folder
+cd BudgetShield
 ```
 
 #### Run
 ```bash
-[Run commands - e.g., npm start, python app.py]
+Open login.html in your browser
 ```
+or
+```
+Right-click login.html → Open with Live Server
 
-### For Hardware:
-
-#### Components Required
-[List all components needed with specifications]
-
-#### Circuit Setup
-[Explain how to set up the circuit]
+```
 
 ---
 
 ## Project Documentation
+
 
 ### For Software:
 
