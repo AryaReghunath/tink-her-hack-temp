@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetShield - Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="dashboard-style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo-icon">🛡️</div>
+                <h2>BudgetShield</h2>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="icon">📈</span>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="handleLogout()">
+                    <span class="icon">🚪</span>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Budget Planner Dashboard</h1>
+                    <p class="subtitle">Monthly Personal Budget Dashboard</p>
+                </div>
+                <div class="header-right">
+                    <div class="month-selector">
+                        <select id="monthSelect" onchange="changeMonth()">
+                            <!-- Populated by JS -->
+                        </select>
+                        <button class="icon-btn" onclick="addNewMonth()">➕</button>
+                    </div>
+                    <div class="user-profile" onclick="toggleProfileDropdown()">
+                        <div class="avatar" id="userAvatar">U</div>
+                        <div class="user-details">
+                            <span class="user-name" id="userName">User</span>
+                            <span class="user-role">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Summary Cards -->
+            <div class="summary-grid">
+                <div class="summary-card expenses-card">
+                    <div class="card-icon">💸</div>
+                    <div class="card-content">
+                        <p class="card-label">Expenses</p>
+                        <h3 class="card-value" id="totalExpenses">₹0</h3>
+                        <span class="card-subtitle">Total Amount Spent</span>
+                    </div>
+                </div>
+
+                <div class="summary-card budget-card">
+                    <div class="card-icon">💰</div>
+                    <div class="card-content">
+                        <p class="card-label">Budget</p>
+                        <h3 class="card-value" id="monthlyBudget">₹0</h3>
+                        <span class="card-subtitle">Your Budget Limit</span>
+                    </div>
+                </div>
+
+                <div class="summary-card balance-card">
+                    <div class="card-icon">🏦</div>
+                    <div class="card-content">
+                        <p class="card-label">Current Balance</p>
+                        <h3 class="card-value" id="currentBalance">₹0</h3>
+                        <span class="card-subtitle">Available to Spend</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="content-grid">
+                <!-- Expense Input Card -->
+                <div class="card expense-input-card">
+                    <div class="card-header">
+                        <h2>Add Expenses</h2>
+                        <div class="edit-controls">
+                            <button class="edit-btn" id="editBtn" onclick="toggleEdit()">✏️ Edit</button>
+                            <button class="save-btn hidden" id="saveBtn" onclick="saveExpenses()">💾 Save</button>
+                        </div>
+                    </div>
+                    <div class="expense-form">
+                        <div class="input-field">
+                            <label for="foodExpense">🍔 Food (₹)</label>
+                            <input type="number" id="foodExpense" min="0" value="0" disabled>
+                        </div>
+                        <div class="input-field">
+                            <label for="travelExpense">🚗 Travel (₹)</label>
+                            <input type="number" id="travelExpense" min="0" value="0" disabled>
+                        </div>
+                        <div class="input-field">
+                            <label for="collegeExpense">🎓 College (₹)</label>
+                            <input type="number" id="collegeExpense" min="0" value="0" disabled>
+                        </div>
+                        <div class="input-field">
+                            <label for="otherExpense">📦 Other (₹)</label>
+                            <input type="number" id="otherExpense" min="0" value="0" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Allocation Summary Card -->
+                <div class="card allocation-card">
+                    <div class="card-header">
+                        <h2>Allocation Summary</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+                    <div class="allocation-legend">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #FF6384;"></span>
+                            <span>Food: <strong id="foodPercent">0%</strong></span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #36A2EB;"></span>
+                            <span>Travel: <strong id="travelPercent">0%</strong></span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #FFCE56;"></span>
+                            <span>College: <strong id="collegePercent">0%</strong></span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #4BC0C0;"></span>
+                            <span>Other: <strong id="otherPercent">0%</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expense Summary Pie Chart -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Expense Summary</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="expensePieChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Budget vs Actual Card -->
+                <div class="card budget-comparison-card">
+                    <div class="card-header">
+                        <h2>Budget vs. Actual</h2>
+                    </div>
+                    <div class="comparison-stats">
+                        <div class="stat-item">
+                            <p>Saving Rate</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill budget-progress" id="savingRateBar"></div>
+                            </div>
+                            <span class="stat-value" id="savingRateText">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <p>Budget Used</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill actual-progress" id="budgetUsedBar"></div>
+                            </div>
+                            <span class="stat-value" id="budgetUsedText">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highest Expenses Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Highest Expenses</h2>
+                    </div>
+                    <div class="expenses-list" id="highestExpensesList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Monthly Comparison Chart -->
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h2>Monthly Expense Comparison</h2>
+                    </div>
+                    <div class="chart-container large-chart">
+                        <canvas id="monthlyComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard-script.js"></script>
+</body>
+</html>
